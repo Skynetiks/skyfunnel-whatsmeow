@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  whatsmeow-service:
+    build: ./whatsmeow-service
+    ports:
+      - "8081:8081"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - WHATSMEOW_SERVICE_URL=http://localhost:8081
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - skyfunnel-network
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - skyfunnel-network
+
+networks:
+  skyfunnel-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
