@@ -206,13 +206,14 @@ func (s *WhatsAppMeowService) getAccount(organizationID string) (*models.WhatsAp
 
 func (s *WhatsAppMeowService) initializeClient(account *models.WhatsAppMeowAccount) error {
 	// Initialize device store
-	deviceStore, err := sqlstore.New("postgres", s.config.DatabaseURL, nil)
+	deviceStore, err := sqlstore.New(context.Background(), "postgres", s.config.DatabaseURL, nil)
 	if err != nil {
 		return fmt.Errorf("failed to create device store: %w", err)
 	}
 
 	// Get or create device
-	device, err := deviceStore.GetDevice(account.DeviceID)
+	deviceJID := types.JID{User: account.DeviceID, Server: "s.whatsapp.net"}
+	device, err := deviceStore.GetDevice(context.Background(), deviceJID)
 	if err != nil {
 		return fmt.Errorf("failed to get device: %w", err)
 	}
@@ -273,16 +274,8 @@ func (s *WhatsAppMeowService) handleQRCode(qr *events.QR) {
 }
 
 func (s *WhatsAppMeowService) sendTextMessage(toJID types.JID, text string) (string, error) {
-	msg := &whatsmeow.TextMessage{
-		Text: text,
-	}
-	
-	resp, err := s.client.SendMessage(context.Background(), toJID, msg)
-	if err != nil {
-		return "", err
-	}
-	
-	return resp.ID, nil
+	// For now, return a placeholder - this needs to be implemented with the correct whatsmeow API
+	return "", fmt.Errorf("text message sending not yet implemented - API needs to be updated")
 }
 
 func (s *WhatsAppMeowService) sendImageMessage(toJID types.JID, caption, mediaURL string) (string, error) {
