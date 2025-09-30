@@ -1,6 +1,6 @@
 module whatsmeow-service
 
-go 1.24.2
+go 1.21
 
 require (
 	go.mau.fi/whatsmeow v0.0.0-20250929162548-7c04e9b206b1
