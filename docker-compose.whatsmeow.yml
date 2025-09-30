@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   whatsmeow-service:
-    build: ./whatsmeow-service
+    build: .
     ports:
       - "8081:8081"
     environment:
