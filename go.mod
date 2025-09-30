@@ -3,7 +3,7 @@ module whatsmeow-service
 go 1.21
 
 require (
-	go.mau.fi/whatsmeow v0.0.0-20240116142307-4b3a7244d205
+	go.mau.fi/whatsmeow v0.0.0-20250929162548-7c04e9b206b1
 	github.com/lib/pq v1.10.9
 )
 
